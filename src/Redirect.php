@@ -3,7 +3,17 @@
 
 namespace RandomState\LaravelDoctrineEntityEvents;
 
-
+/**
+ * Class Redirect
+ * @package RandomState\LaravelDoctrineEntityEvents
+ *
+ * @method $this postPersist($destination = null)
+ * @method $this postUpdate($destination = null)
+ * @method $this prePersist($destination = null)
+ * @method $this preUpdate($destination = null)
+ * @method $this preFlush($destination = null)
+ * @method $this postFlush($destination = null)
+ */
 class Redirect
 {
 

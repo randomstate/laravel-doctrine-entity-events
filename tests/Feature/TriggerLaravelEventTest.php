@@ -7,7 +7,6 @@ namespace RandomState\LaravelDoctrineEntityEvents\Tests\Feature;
 use Doctrine\Common\EventManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Facades\Event;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use RandomState\LaravelDoctrineEntityEvents\EventRedirector;
