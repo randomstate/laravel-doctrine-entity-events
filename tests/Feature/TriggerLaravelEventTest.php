@@ -86,6 +86,8 @@ class TriggerLaravelEventTest extends TestCase
         $args = new LifecycleEventArgs(new Dummy(), $this->entityManager());
 
         $this->eventManager()->dispatchEvent('postPersist', $args);
-        Event::assertDispatched(MyPersistEvent::class);
+        Event::assertDispatched(MyPersistEvent::class, function(MyPersistEvent $event) {
+            return $event->entity instanceof Dummy;
+        });
     }
 }
