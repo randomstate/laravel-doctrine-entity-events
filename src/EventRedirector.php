@@ -36,11 +36,12 @@ class EventRedirector implements EventSubscriber
             return;
         }
 
-        $entity = get_class($eventArgs->getObject());
-        $redirects = $this->redirects[$entity] ?? false;
+        $entity = $eventArgs->getObject();
+        $redirects = $this->redirects[get_class($entity)] ?? false;
 
         if($redirects) {
             foreach($redirects as $redirect) {
+                array_unshift($arguments, $entity);
                 $redirect->handle($event, $arguments);
             }
         }
