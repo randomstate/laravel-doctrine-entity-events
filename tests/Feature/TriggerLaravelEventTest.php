@@ -67,4 +67,25 @@ class TriggerLaravelEventTest extends TestCase
         $this->eventManager()->dispatchEvent('postUpdate', $args);
         Event::assertDispatched(MyEvent::class);
     }
+
+    /**
+     * @test
+     */
+    public function can_define_redirects_without_tapping_into_container()
+    {
+        Event::fake();
+
+        EventRedirector::register(function(EventRedirector $redirector) {
+            $redirector
+                ->redirect(Dummy::class)
+                ->postPersist(MyPersistEvent::class)
+                ->postUpdate()
+                ->default(MyEvent::class);
+        });
+
+        $args = new LifecycleEventArgs(new Dummy(), $this->entityManager());
+
+        $this->eventManager()->dispatchEvent('postPersist', $args);
+        Event::assertDispatched(MyPersistEvent::class);
+    }
 }

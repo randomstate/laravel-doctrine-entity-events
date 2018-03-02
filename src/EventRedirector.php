@@ -4,10 +4,16 @@
 namespace RandomState\LaravelDoctrineEntityEvents;
 
 
+use Closure;
 use Doctrine\Common\EventSubscriber;
 
 class EventRedirector implements EventSubscriber
 {
+    public static $onBoot;
+
+    public static function register(Closure $redirects) {
+        static::$onBoot = $redirects;
+    }
 
     /**
      * @var Redirect[][]
@@ -21,7 +27,7 @@ class EventRedirector implements EventSubscriber
      */
     public function redirect($entityClass)
     {
-        return $this->register($entityClass, new Redirect);
+        return $this->registerRedirect($entityClass, new Redirect);
     }
 
     public function __call($event, array $arguments)
@@ -46,7 +52,7 @@ class EventRedirector implements EventSubscriber
      *
      * @return Redirect
      */
-    protected function register($entityClass, Redirect $redirect)
+    protected function registerRedirect($entityClass, Redirect $redirect)
     {
         if(!($this->redirects[$entityClass] ?? false)) {
             $this->redirects[$entityClass] = [];
