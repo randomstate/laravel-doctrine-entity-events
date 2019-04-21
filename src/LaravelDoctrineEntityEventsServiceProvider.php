@@ -5,6 +5,7 @@ namespace RandomState\LaravelDoctrineEntityEvents;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelDoctrineEntityEventsServiceProvider extends ServiceProvider
@@ -20,7 +21,7 @@ class LaravelDoctrineEntityEventsServiceProvider extends ServiceProvider
            return $redirector;
         });
 
-        $this->app->resolving(EntityManager::class, function(EntityManager $entityManager) {
+        $this->app->resolving(EntityManagerInterface::class, function(EntityManagerInterface $entityManager) {
            $entityManager->getEventManager()->addEventSubscriber($this->app->make(EventRedirector::class));
            return $entityManager;
         });
