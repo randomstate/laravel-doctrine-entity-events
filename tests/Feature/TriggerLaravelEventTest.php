@@ -6,6 +6,7 @@ namespace RandomState\LaravelDoctrineEntityEvents\Tests\Feature;
 
 use Doctrine\Common\EventManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Illuminate\Support\Facades\Event;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
@@ -27,11 +28,11 @@ class TriggerLaravelEventTest extends TestCase
     }
 
     /**
-     * @return EntityManager
+     * @return EntityManagerInterface
      */
     protected function entityManager()
     {
-        return $this->app->make(EntityManager::class);
+        return $this->app->make(EntityManagerInterface::class);
     }
 
     /**
