@@ -20,7 +20,7 @@ use Tests\TestCase;
 class TriggerLaravelEventTest extends TestCase
 {
 
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         $this->app->register(DoctrineServiceProvider::class);
