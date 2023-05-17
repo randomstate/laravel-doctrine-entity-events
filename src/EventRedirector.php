@@ -4,6 +4,7 @@
 namespace RandomState\LaravelDoctrineEntityEvents;
 
 
+use App\Identity\Entities\Organisation;
 use Closure;
 use Doctrine\Common\EventSubscriber;
 
@@ -37,7 +38,7 @@ class EventRedirector implements EventSubscriber
         }
 
         $entity = $eventArgs->getObject();
-        $redirects = $this->redirects[get_class($entity)] ?? false;
+        $redirects = $this->getRedirectsForClass(get_class($entity)); //$this->redirects[get_class($entity)] ?? false;
 
         if($redirects) {
             foreach($redirects as $redirect) {
@@ -45,6 +46,19 @@ class EventRedirector implements EventSubscriber
                 $redirect->handle($event, $arguments);
             }
         }
+    }
+
+    public function getRedirectsForClass($class)
+    {
+        $redirects = $this->redirects[$class] ?? [];
+
+        $parent = get_parent_class($class);
+
+        if(!$parent) {
+            return $redirects;
+        }
+
+        return array_merge($redirects, $this->getRedirectsForClass($parent));
     }
 
     /**
